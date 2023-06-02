@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-export default class ExercisesList extends Component {
+export default class CreateUsers extends Component {
     render() {
-        <div>
-            <p>You are on the Exercises List component!</p>
-        </div>
+        return (
+            <div>
+                <p>You are on the Create Users component!</p>
+            </div>
+        )    
     }
 }

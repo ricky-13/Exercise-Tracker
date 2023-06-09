@@ -11,16 +11,18 @@ import CreateUser from "./components/create-user.component";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <br/>
-      <Routes>
-        <Route path="/" element = {<ExerciseList />} />
-        <Route path="/edit/:id" element = {<EditExercise />} />
-        <Route path="/create" element = {<CreateExercise />} />
-        <Route path="/user" element = {<CreateUser />} />
-      </Routes>
-    </Router>
+    <div className='container'>
+      <Router>
+        <Navbar />
+        <br/>
+        <Routes>
+          <Route path="/" element = {<ExerciseList />} />
+          <Route path="/edit/:id" element = {<EditExercise />} />
+          <Route path="/create" element = {<CreateExercise />} />
+          <Route path="/user" element = {<CreateUser />} />
+        </Routes>
+      </Router >
+    </div>
   );
 }
 

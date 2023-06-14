@@ -56,6 +56,8 @@ export default class CreateExercises extends Component {
     onSubmit(e) {
         e.preventDefault();
 
+// prevents the default behavior of form submission, which typically involves reloading the page
+
         const exercise = {
             username: this.state.username,
             description: this.state.description,

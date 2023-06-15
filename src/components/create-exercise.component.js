@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default class CreateExercises extends Component {
-
+// all react classes start with a constructor and they start with a super(props) call
     constructor(props) {
         super(props);
 
@@ -55,7 +55,6 @@ export default class CreateExercises extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
 // prevents the default behavior of form submission, which typically involves reloading the page
 
         const exercise = {
@@ -66,8 +65,10 @@ export default class CreateExercises extends Component {
         }
 
         console.log(exercise);
+        // used for debugging, but cant see for long if the code line below is not commented. takes to different page
 
         window.location = '/';
+// redirects the user to the root URL ('/'). It's a way to navigate the user to a different page or route after the form submission
     }
 
     render() {

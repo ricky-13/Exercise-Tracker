@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -27,10 +28,15 @@ export default class CreateExercises extends Component {
 //react lifestyle method that react will automatically call 
 //eventually we'll have users directly coming from the mongoDB, but for now we'll hardcode a user
     componentDidMount() {
-        this.setState({
-            users: ['test user'],
-            username: 'test user'
-        })
+        axios.get('http://localhost:5000/users/')
+            .then(res => {
+                if(res.data.length > 0) {
+                    this.setState({
+                        users: res.data.map(user => user.username),
+                        username: res.data[0].username
+                    })
+                }
+            })
     }
 
 //adding methods to update the state properties 
@@ -74,7 +80,10 @@ export default class CreateExercises extends Component {
         console.log(exercise);
         // used for debugging, but cant see for long if the code line below is not commented. takes to different page
 
-        window.location = '/';
+        axios.post('http://localhost:5000/exercises/add', exercise)
+            .then(res => console.log(res.data));
+
+        // window.location = '/';
 // redirects the user to the root URL ('/'). It's a way to navigate the user to a different page or route after the form submission
     }
 

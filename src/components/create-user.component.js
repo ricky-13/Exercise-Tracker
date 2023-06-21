@@ -14,6 +14,7 @@ export default class CreateUsers extends Component {
             username: ''
         }
     }
+
     onChangeUsername(e) {
         this.setState({
             username: e.target.value
@@ -28,11 +29,11 @@ export default class CreateUsers extends Component {
             username: this.state.username
         }
 
-        axios.post('http://localhost:5000/users/add', user)
-            .then(res => console.log(res.data));
-
         console.log(user);
         // used for debugging, but cant see for long if the code line below is not commented. takes to different page
+
+        axios.post('http://localhost:5000/users/add', user)
+            .then(res => console.log(res.data));
         
         this.setState({
             username: ''

@@ -12,7 +12,9 @@ export default class CreateExercises extends Component {
         this.onChangeDuration = this.onChangeDuration.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+// 
 
+// setting the initial state of the component by assigning and obj to this.state
         this.state = {
             username: '',
             description: '',
@@ -22,6 +24,8 @@ export default class CreateExercises extends Component {
         }
     }
 
+//react lifestyle method that react will automatically call 
+//eventually we'll have users directly coming from the mongoDB, but for now we'll hardcode a user
     componentDidMount() {
         this.setState({
             users: ['test user'],
@@ -29,11 +33,14 @@ export default class CreateExercises extends Component {
         })
     }
 
+//adding methods to update the state properties 
     onChangeUsername(e) {
         this.setState({
             username: e.target.value
         });
     }
+//whenever someone will change the usrname this method will be called. target is the textbox in this case 
+
 
     onChangeDescription(e) {
         this.setState({
@@ -82,6 +89,7 @@ export default class CreateExercises extends Component {
                             required 
                             className='form-control'
                             value={this.state.username}
+                // har jagah hi this.state.username dala hua h
                             onChange={this.onChangeUsername}>
                                 {
                                     this.state.users.map(function(user){
@@ -91,6 +99,7 @@ export default class CreateExercises extends Component {
                                         </option>
                                     })
                                 }
+                //      
                         </select>
                     </div>
                     <div className="form-group">

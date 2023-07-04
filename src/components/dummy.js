@@ -1,9 +1,11 @@
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Link, useParams } from 'react-router-dom';
 
-export default class CreateExercises extends Component {
+export default class EditExercise extends Component {
 // all react classes start with a constructor and they start with a super(props) call
     constructor(props) {
         super(props);
@@ -27,16 +29,33 @@ export default class CreateExercises extends Component {
 
 //react lifestyle method that react will automatically call 
 //eventually we'll have users directly coming from the mongoDB, but for now we'll hardcode a user
-    componentDidMount() {
+    componentDidMount() { 
+        // const { id } = useParams();
+        
+        // const {params} = this.props.match;
+        // console.log(params);
+        axios.get('http://localhost:5000/exercises/' + this.props.match.params.id)
+            .then(res => {
+                this.setState({
+                    username: res.data.username,
+                    description: res.data.description,
+                    duration: res.data.duration,
+                    date: new Date(res.data.date)
+                })
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+
         axios.get('http://localhost:5000/users/')
             .then(res => {
                 if(res.data.length > 0) {
                     this.setState({
-                        users: res.data.map(user => user.username),
-                        username: res.data[0].username
+                        users: res.data.map(user => user.username)
                     })
                 }
             })
+            //do we need this????
     }
 
 //adding methods to update the state properties 
@@ -80,35 +99,17 @@ export default class CreateExercises extends Component {
         console.log(exercise);
         // used for debugging, but cant see for long if the code line below is not commented. takes to different page
 
-        axios.post('http://localhost:5000/exercises/add', exercise)
+        axios.post('http://localhost:5000/exercises/update/' + this.props.match.params.id, exercise)
             .then(res => console.log(res.data));
 
-        // window.location = '/';
+        window.location = '/';
 // redirects the user to the root URL ('/'). It's a way to navigate the user to a different page or route after the form submission
     }
 
     render() {
         return (
-            // <div>
-            //     <form>
-            //         <div class="form-group">
-            //             <label for="exampleInputEmail1">Email address</label>
-            //             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-            //             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            //         </div>
-            //         <div class="form-group">
-            //             <label for="exampleInputPassword1">Password</label>
-            //             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
-            //         </div>
-            //         <div class="form-check">
-            //             <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
-            //             <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            //         </div>
-            //         <button type="submit" class="btn btn-primary">Submit</button>
-            //     </form>
-            // </div>
-             <div>
-                <h3>Create New Exercise Log</h3>
+            <div>
+                <h3>Edit Exercise Log</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className='form-group'>
                         <label>Username: </label>
@@ -146,7 +147,7 @@ export default class CreateExercises extends Component {
                             onChange={this.onChangeDuration}
                             />
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label>Date: </label>
                         <div>
                             <DatePicker
@@ -154,13 +155,13 @@ export default class CreateExercises extends Component {
                                 onChange={this.onChangeDate}
                                 />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
-                        <input type='submit' value='Create Exercise Log' className='btn btn-primary' />
+                        <input type='submit' value='Edit Exercise Log' className='btn btn-primary' />
                     </div>
                 </form>
-            </div> 
+            </div>
         )
     }
 }

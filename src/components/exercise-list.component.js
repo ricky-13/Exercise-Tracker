@@ -4,19 +4,24 @@ import axios from 'axios';
 
 //this file now has 2 components
 //implemented as functional component, lack of lifecycle and state methods 
-const Exercise = props => (
-    <tr>
+const Exercise = props => {
+    // console.log(props.exercise._id + "    heeellllllloooooooooooo")
+    // 64723269a5067a1da7a9a039
+    return (<tr>
         <td>{props.exercise.username}</td>
         <td>{props.exercise.description}</td>
         <td>{props.exercise.duration}</td>
-        <td>{props.exercise.date.substring(0,10)}</td>
+        <td>{props.exercise.date}</td>
         {/* used substring bcz date gives date time and timezone and we just need the date part */}
         <td>
             <Link to = {"/edit/" + props.exercise._id}>edit</Link> | <a href = "#" onClick = {() => { props.deleteExercise(props.exercise._id) }}>delete</a>
+            {/* | <a href = "#" onClick = {() => { props.deleteExercise(props.exercise._id) }}>delete</a> */}
             {/* edit route is beind created, the path will be /edit/id */}
+            
         </td>
     </tr>
-)
+    )
+}
 
 //this component is a class component 
 export default class ExerciseList extends Component {

@@ -3,10 +3,21 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
 
 const EditExercise = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const defaultDateGetter = ()=>{
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate
+
+  }
 
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
@@ -18,10 +29,17 @@ const EditExercise = () => {
     axios
       .get(`http://localhost:5000/exercises/${id}`)
       .then((res) => {
+        debugger
         setUsername(res.data.username);
         setDescription(res.data.description);
         setDuration(res.data.duration);
-        setDate(new Date(res.data.date));
+        // setDate(new Date(isNaN(Number(res.data.date)) ? 0 : isNaN(Number(res.data.date))));
+        setDate(new Date(isNaN(Number(res.data.date)) ? 0 : isNaN(Number(res.data.date))));
+        // console.log(date + "heelllluuuuuuu1")
+        // const timestamp = date;
+        // console.log(timestamp + "heelllluuuuuuu2")
+        // const formattedDate = new Date(timestamp);
+        // setDate(formattedDate);
         
       })
       .catch((err) => {
@@ -35,6 +53,10 @@ const EditExercise = () => {
       }
     });
   }, [id]);
+
+  // console.log(date + "sfsfsfsfsdfsdfsdfsdf");
+
+  
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -111,7 +133,7 @@ const EditExercise = () => {
         <div className="form-group">
           <label>Date: </label>
           <div>
-            <DatePicker selected = {formattedDate} onChange={onChangeDate} dateFormat="yyyy-MM-dd" />
+            <DatePicker selected = {date} onChange={onChangeDate}  />
           </div>
         </div>
 
